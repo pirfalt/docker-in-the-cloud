@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  # Webserver
+  app:
+    image: ${image_repo}/cloud-app:0.1
+    init: true
+    environment:
+      - "PORT=8000"
+
+  # Reverse proxy
+  revers-proxy:
+    image: caddy:2.3.0
+    ports:
+      - "443:443"
+    command: "caddy reverse-proxy --from ${host_url}:443 --to app:8000"
+    domainname: ${domainname}

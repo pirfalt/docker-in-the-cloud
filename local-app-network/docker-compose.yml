@@ -1,0 +1,15 @@
+version: "3"
+services:
+  # Webserver
+  app:
+    image: cloud-app:0.1
+    init: true
+
+  # Client
+  client:
+    image: alpine:3.13
+    command: >-
+      sh -c '
+        apk add curl &&
+        curl -s app:8000
+      '
